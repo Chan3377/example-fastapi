@@ -23,11 +23,12 @@ except ValidationError as exc:
 
 # create post Type
 class PostCreate(PostBase):
+    model_config = ConfigDict(from_attributes=True)
     pass
 
 
 try:
-    PostCreate()
+    PostCreate(PostBase=PostBase(title="Post", content="content", published=True))
 except ValidationError as exc:
     print(repr(exc.errors()[0]["type"]))
 
@@ -142,6 +143,7 @@ except ValidationError as exc:
 
 
 class TokenData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: Optional[int] = None
 
 
@@ -153,6 +155,7 @@ except ValidationError as exc:
 
 # le: less than or equal to
 class Vote(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     post_id: int
     dir: conint(le=1)
 
