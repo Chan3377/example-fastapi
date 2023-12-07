@@ -9,7 +9,7 @@ from pydantic.types import conint
 
 
 class PostBase(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    # model_config = ConfigDict(from_attributes=True)
     title: str
     content: str
     published: bool = True
@@ -23,7 +23,7 @@ except ValidationError as exc:
 
 # create post Type
 class PostCreate(PostBase):
-    model_config = ConfigDict(from_attributes=True)
+    # model_config = ConfigDict(from_attributes=True)
     pass
 
 
@@ -69,9 +69,11 @@ try:
         id=1,
         created_at="2032-04-23T10:20:30.400+02:30",
         owner_id=1,
-        owner=UserOut(
-            id=1, email="email@gmail.com", created_at="2032-04-23T10:20:30.400+02:30"
-        ),
+        owner={
+            "id": 1,
+            "email": "email@gmail.com",
+            "created_at": "2032-04-23T10:20:30.400+02:30",
+        },
     )
 except ValidationError as exc:
     print(repr(exc.errors()[0]["type"]))
@@ -89,16 +91,16 @@ class PostOut(BaseModel):
 
 try:
     PostOut(
-        Post=Post(
-            id=1,
-            created_at="2032-04-23T10:20:30.400+02:30",
-            owner_id=1,
-            owner=UserOut(
-                id=1,
-                email="email@gmail.com",
-                created_at="2032-04-23T10:20:30.400+02:30",
-            ),
-        ),
+        Post={
+            "id": 1,
+            "created_at": "2032-04-23T10:20:30.400+02:30",
+            "owner_id": 1,
+            "owner": {
+                "id": 1,
+                "email": "email@gmail.com",
+                "created_at": "2032-04-23T10:20:30.400+02:30",
+            },
+        },
         votes=0,
     )
 except ValidationError as exc:
@@ -107,7 +109,7 @@ except ValidationError as exc:
 
 # create user
 class UserCreate(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    # model_config = ConfigDict(from_attributes=True)
     email: EmailStr
     password: str
 
@@ -119,7 +121,7 @@ except ValidationError as exc:
 
 
 class UserLogin(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    # model_config = ConfigDict(from_attributes=True)
     email: EmailStr
     password: str
 
@@ -131,7 +133,7 @@ except ValidationError as exc:
 
 
 class Token(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    # model_config = ConfigDict(from_attributes=True)
     access_token: str
     token_type: str
 
@@ -143,12 +145,12 @@ except ValidationError as exc:
 
 
 class TokenData(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    # model_config = ConfigDict(from_attributes=True)
     id: Optional[int] = None
 
 
 try:
-    TokenData(id=1)
+    TokenData(id=None)
 except ValidationError as exc:
     print(repr(exc.errors()[0]["type"]))
 

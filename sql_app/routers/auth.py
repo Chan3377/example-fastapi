@@ -11,7 +11,7 @@ router = APIRouter(tags=["Authentication"])
 def login(
     user_credentials: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(database.get_db),
-):
+) -> dict:
     # OAuth2PasswordRequestForm create dict = {"username": "abc", "password": "abc"}
     user = (
         db.query(models.User)
