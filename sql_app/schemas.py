@@ -9,7 +9,7 @@ from pydantic.types import conint
 
 
 class PostBase(BaseModel):
-    # model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True)
     title: str
     content: str
     published: bool = True

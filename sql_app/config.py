@@ -1,5 +1,5 @@
 # config.py - is used to handle environment variable
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -13,8 +13,9 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int
 
     # tell pydantic to connect with the file name
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env")
+    # class Config:
+    #     env_file = ".env"
 
 
 settings = Settings()
